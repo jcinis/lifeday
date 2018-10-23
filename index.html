@@ -9,16 +9,25 @@
     <link rel="stylesheet" href="lifeday.css">
   </head>
   <body>
-    <div id="lifeday" class="">
+
+    <div id="lifeday">
+
       <form id="setdob" name="setdob" action="#">
         <div>Enter your date of birth to calculate your lifeday</div>
         <input type="text" name="dob" id="dob" value="" placeholder="MM/DD/YYYY" autocomplete="off" required>
         <button type="submit" name="calculate" value="calculate"><span>&therefore;</span></button>
       </form>
-      <div class="results">
-        Today is day <span id="day">00000</span> of your life.
+
+      <div id="results" class="results">
+        Today is day <br><span id="day">00000</span><br> of your life.
+        <div class="sub">(Make it a good one.)</div>
       </div>
+
     </div>
+
+
+    <a href="#" id="settings">&#9881;</a>
+
     <script type="text/javascript" src="lifeday.js"></script>
   </body>
 </html>
