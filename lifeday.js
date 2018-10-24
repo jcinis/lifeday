@@ -24,43 +24,41 @@ function fetchDOB(str){
   return window.localStorage.getItem("dob");
 }
 
-function setCookie(str) {
-	document.cookie = "dob="+str;
-}
-
-function getCookie(){
-	let m = document.cookie.match(/dob\=((0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4})/);
-  return m ? m[1] : "";
-}
 
 // MAIN APPLICATION ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+const el = document.getElementById("lifeday");
 const dayEl = document.getElementById("day");
 const formEl = document.getElementById("setdob");
 const dobEl = document.getElementById("dob");
 const resultsEl = document.getElementById("results");
-const settingsEl = document.getElementById("settings");
+const settingsBtnEl = document.getElementById("settings-btn");
+
+showResults = function(){
+  el.className = "";
+  resultsEl.className="fade-in";
+}
+
+hideResults = function(){
+  el.className="settings";
+  resultsEl.className="fade-out";
+}
 
 toggleResults = function(){
-  if(resultsEl.className == "hide"){
-    resultsEl.className = "";
+  if(el.className == "settings"){
+    showResults();
   } else {
-    resultsEl.className = "hide";
+    hideResults();
   }
   return false;
 }
-settingsEl.onclick = toggleResults;
-
-let dob = fetchDOB();
 
 setLifeday = function(dob){
-	dayEl.innerHTML = lifeDay(moment(dob));
+  dayEl.innerHTML = lifeDay(moment(dob));
 }
 
 validateDOB = function(e) {
-
   let str = dobEl.value;
-
   if(validDOB(str)) {
     formEl.className = "valid";
     storeDOB(str);
@@ -68,20 +66,30 @@ validateDOB = function(e) {
     formEl.className = "";
     storeDOB("");
   }
-
   return false;
 }
 
-dobEl.onkeyup = validateDOB;
-dobEl.onchange = validateDOB;
-
-dobEl.value = dob;
-validateDOB();
-
 submitDOB = function(e){
-
   setLifeday(dobEl.value);
-
+  showResults();
 	return false;
 }
-formEl.onsubmit = submitDOB;
+
+bindEvents = function() {
+  dobEl.onkeyup = validateDOB;
+  dobEl.onchange = validateDOB;
+  formEl.onsubmit = submitDOB;
+  settingsBtnEl.onclick = toggleResults;
+}
+
+onLoad = function(){
+  let dob = fetchDOB();
+  if(dob){
+    dobEl.value = dob;
+    validateDOB();
+    submitDOB();
+  }
+}
+
+bindEvents();
+onLoad();
