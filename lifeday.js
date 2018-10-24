@@ -4,6 +4,8 @@
  * @author j@cin.is
  */
 
+// UTILITY FUNCTIONS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 function validDOB(dob){
 	let m = dob.match(/^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/);
   return m ? true : false;
@@ -75,21 +77,20 @@ submitDOB = function(e){
 	return false;
 }
 
-bindEvents = function() {
-  dobEl.onkeyup = validateDOB;
-  dobEl.onchange = validateDOB;
-  formEl.onsubmit = submitDOB;
-  settingsBtnEl.onclick = toggleResults;
-}
 
-onLoad = function(){
-  let dob = fetchDOB();
-  if(dob){
-    dobEl.value = dob;
-    validateDOB();
-    submitDOB();
-  }
-}
+// BIND EVENTS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-bindEvents();
-onLoad();
+dobEl.onkeyup = validateDOB;
+dobEl.onchange = validateDOB;
+formEl.onsubmit = submitDOB;
+settingsBtnEl.onclick = toggleResults;
+
+
+// LOAD STORED DOB :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+let dob = fetchDOB();
+if(dob){
+  dobEl.value = dob;
+  validateDOB();
+  submitDOB();
+}

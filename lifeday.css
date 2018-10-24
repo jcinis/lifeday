@@ -54,6 +54,13 @@ body, input {
   background: transparent;
   overflow:hidden;
   border: 5px solid #584933;
+  transition: .5s;
+  opacity: 1;
+}
+
+#settings-btn.hover {
+  transition: .5s;
+  opacity: .8;
 }
 
 .settings #settings-btn {
@@ -168,35 +175,31 @@ form button:focus {
 form button {
   width: 100px;
   height: 100px;
-  background: #584933;
-  border-radius: 50%;
+  color: #584933;
   margin: 0px auto;
   text-align: center;
-  color: #EED5AE;
-  font-size: 124px;
-  line-height: 100px;
+  font-size: 120px;
   display:block;
   overflow:hidden;
   position: relative;
   opacity: 0;
-  transition: transform .5s;
-  transition: opacity .5s;
+  transition:.5s;
 }
 
 form.valid button {
-  transition: opacity .5s;
-  transition: transform .5s;
+  transition: .5s;
   opacity:1;
 }
 
 form.valid button:hover {
-  transform: rotate(90deg);
-  transition: transform .5s;
+  transition: .5s;
+  opacity:.8;
 }
 
 form button span {
   display: block;
   position: relative;
+  left: -9px;
   top: -20px;
 }
 
