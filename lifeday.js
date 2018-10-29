@@ -72,8 +72,10 @@ validateDOB = function(e) {
 }
 
 submitDOB = function(e){
-  setLifeday(dobEl.value);
-  showResults();
+  if(formEl.className == 'valid'){
+    setLifeday(dobEl.value);
+    showResults();
+  }
 	return false;
 }
 
