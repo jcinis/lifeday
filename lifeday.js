@@ -6,6 +6,14 @@
 
 // UTILITY FUNCTIONS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+function formatDOB(str) {
+	let m = str.match(/^(\d{2})(\d{2})(\d{4})$/);
+  if(m){
+    str = m[1]+"/"+m[2]+"/"+m[3];
+  }
+  return str;
+}
+
 function validDOB(dob){
 	let m = dob.match(/^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/);
   return m ? true : false;
@@ -60,7 +68,8 @@ setLifeday = function(dob){
 }
 
 validateDOB = function(e) {
-  let str = dobEl.value;
+  let str = formatDOB(dobEl.value);
+  dobEl.value = str;
   if(validDOB(str)) {
     formEl.className = "valid";
     storeDOB(str);
