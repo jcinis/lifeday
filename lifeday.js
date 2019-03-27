@@ -64,7 +64,9 @@ toggleResults = function(){
 }
 
 setLifeday = function(dob){
-  dayEl.innerHTML = lifeDay(moment(dob));
+  const ld = lifeDay(moment(dob));
+  dayEl.innerHTML = ld;
+  document.title = "Ld:"+ld;
 }
 
 validateDOB = function(e) {
