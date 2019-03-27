@@ -1,7 +1,7 @@
 {
   "name": "Lifeday",
   "description": "Motivate yourself by measuring your life in days instead of years.",
-  "version": "1.0",
+  "version": "1.0.0",
   "manifest_version": 2,
   "offline_enabled": true,
   "background": {
