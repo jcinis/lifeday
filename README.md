@@ -7,8 +7,8 @@ You can install the chrome plugin [here](https://chrome.google.com/webstore/deta
 
 If you are not using chrome, there is a web version of this repo located at [jcinis.github.io/lifeday](https://jcinis.github.io/lifeday) that you can set your browser homepage to.
 
-Inspired as a synthesis between the [Motivation](https://github.com/maccman/motivation) Chrome extension by the multitalented [Alex MacCaw](https://twitter.com/maccaw), and musicl legend [Nick Cave](https://en.wikipedia.org/wiki/Nick_Cave) for his film [20000 Days on Earth](https://en.wikipedia.org/wiki/20,000_Days_on_Earth).
+Inspired as a synthesis between the [Motivation](https://github.com/maccman/motivation) Chrome extension by the multitalented [Alex MacCaw](https://twitter.com/maccaw), and music legend [Nick Cave](https://en.wikipedia.org/wiki/Nick_Cave) and his film [20000 Days on Earth](https://en.wikipedia.org/wiki/20,000_Days_on_Earth).
 
 ![](lifeday-card-day.jpg)
 ![](lifeday-card-dob.jpg)
-![](lifeday-card-ymd.jpg)
+![](lifeday-card-mdy.jpg)
