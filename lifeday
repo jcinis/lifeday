@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Requires that BIRTHDATE is set as an environment variable
+# export BIRTHDATE="1980-01-13"
+
+function lifeday {
+    DATETIME=$(date -d 00:00:00 +%Y-%m-%d)"T00:00:00"
+    BIRTHDATETIME=$1"T00:00:00"
+    echo $(( ($(date -d $DATETIME -u +%s) - $(date -d $BIRTHDATETIME -u +%s)) / 86400 + 1))
+}
+
+if [ -z "$1" ]
+then
+    # calculate using BIRTHDATE env var
+
+    if [ -z "$BIRTHDATE" ]
+    then
+        printf 'Error: BIRTHDATE environment variable not set\n'
+        exit 1
+    else
+        lifeday $BIRTHDATE
+    fi
+
+else
+    # calculate using passed in date
+    lifeday $1
+fi
+
