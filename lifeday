@@ -1,28 +1,130 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# Requires that BIRTHDATE is set as an environment variable
+# Default DOB can be set using BIRTHDATE environment variable
 # export BIRTHDATE="1980-01-13"
 
-function lifeday {
-    DATETIME=$(date -d 00:00:00 +%Y-%m-%d)"T00:00:00"
-    BIRTHDATETIME=$1"T00:00:00"
+showHelp() {
+cat << EOF
+Usage: lifeday [-hdbv] <date|lifeday>
+Calculates the current [default] or passed day of your life with your BIRTHDATE as day one.
+
+-h, -help,      --help          Display help
+-v, -verbose,   --verbose       Run script in verbose mode.
+-b, -dob,       --dob           Date of Birth to use as a base for calcuation. Defaults to BIRTHDATE env var if set.
+-b, -date,      --date          Date to calculate lifeday for. Defaults to current day.
+
+Examples:
+
+    Calculate the current lifeday for the default user
+    lifeday
+
+    Calculate the lifeday on 2020-03-04 for the default user
+    lifeday 2020-03-04
+
+    Calculate the date for the default user on their 8435th day on earth
+    lifeday 8435
+
+    Calculate when someone born on 1993-05-05 will be 10000 days old
+    lifeday --dob 1993-05-05 10000
+
+EOF
+}
+
+function date_to_lifeday () {
+    local dob=$1
+    local date=$2
+    DATETIME=$date"T12:00:00"
+    BIRTHDATETIME=$dob"T12:00:00"
     echo $(( ($(date -d $DATETIME -u +%s) - $(date -d $BIRTHDATETIME -u +%s)) / 86400 + 1))
 }
 
-if [ -z "$1" ]
+function lifeday_to_date () {
+    local dob=$1
+    local day=$2
+    local DTSEC=$(( (($day-1)*86400)+$(( $(date -d $dob"T12:00:00" +%s) )) ))
+    echo $(eval "date -d @$DTSEC +%Y-%m-%d")
+}
+
+
+# set default variables
+verbose=0
+dob=$BIRTHDATE
+date=$(date -d 00:00:00 +%Y-%m-%d)
+day=0
+method="date_to_lifeday"
+
+# parse command line options
+options=$(getopt -l "help,verbose,date:,dob:,day:" -o "hd:b:l:v" -a -- "$@")
+eval set -- "$options"
+
+while true
+do
+case $1 in
+-h|--help)
+    showHelp
+    exit 0
+    ;;
+-d|--date)
+    shift
+    date=$1
+    ;;
+-b|--dob)
+    shift
+    dob=$1
+    ;;
+-l|--day)
+    shift
+    day=$1
+    ;;
+-v|--verbose)
+    export verbose=1
+    ;;
+--)
+    shift
+    break;;
+esac
+shift
+done
+
+# parse ordered options
+if [[ $1 =~ ^-?[0-9+] ]]
 then
-    # calculate using BIRTHDATE env var
-
-    if [ -z "$BIRTHDATE" ]
+    # check if passed option is a number
+    if [[ $1 =~ ^[0-9]+$ ]]
     then
-        printf 'Error: BIRTHDATE environment variable not set\n'
-        exit 1
-    else
-        lifeday $BIRTHDATE
-    fi
+        method="lifeday_to_date"
+        day=$1
 
-else
-    # calculate using passed in date
-    lifeday $1
+    else
+        # assume the passed option is a date
+        method="date_to_lifeday"
+        date=$1
+    fi
 fi
 
+# run calculation and output
+if [ $method == "lifeday_to_date" ]
+then
+    lifeday_to_date $dob $day
+
+else
+    date_to_lifeday $dob $date
+fi
+
+
+# output verbose variables
+if [ $verbose == 1 ]
+then
+    cat << EOF
+---
+BIRTHDATE: $BIRTHDATE
+dob: $dob
+date: $date
+day: $day
+ordered: $@
+method: $method
+---
+EOF
+fi
+
+exit 0
